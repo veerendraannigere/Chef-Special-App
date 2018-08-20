@@ -1,0 +1,33 @@
+<ng-content></ng-content>
+<ion-footer [hidden]="hideWizard" style="position: fixed">
+   <ion-grid class="cs-footer">
+      <ion-row>
+         <ion-col col-6>
+            <button ion-button block color="dark" *ngIf="isOnFirstStep()" (click)="goToHome()">Cancel</button>
+            <button ion-button block color="dark" *ngIf="!isOnFirstStep()" (click)="back()">Skip for Now</button>
+         </ion-col>
+         <ion-col col-6>
+            <button ion-button block color="danger" *ngIf="(!isOnFinalStep() && getCondition())" [disabled]="isDisable" (click)="next()">Continue</button>
+            <button ion-button block color="danger" *ngIf="(isOnFinalStep() && getCondition())" (click)="finish.emit(step + 1)">Finish</button>
+         </ion-col>
+      </ion-row>
+   </ion-grid>
+   <div class="ion-wizard-footer" style="display: none">
+      <ion-fab [@btnState] *ngIf="!isOnFirstStep()" left bottom>
+      <button ion-fab (click)="back()">
+         <ion-icon name="arrow-round-back"></ion-icon>
+      </button>
+      </ion-fab>
+      <ion-badge *ngIf="showSteps">{{step}} / {{steps}}</ion-badge>
+      <ion-fab [@btnState] *ngIf="(!isOnFinalStep() && getCondition())" right bottom>
+      <button ion-fab (click)="next()">
+         <ion-icon name="arrow-round-forward"></ion-icon>
+      </button>
+      </ion-fab>
+      <ion-fab [@btnState] *ngIf="(isOnFinalStep() && getCondition())" right bottom>
+      <button ion-fab (click)="finish.emit(step + 1)">
+         <ion-icon [name]="finishIcon"></ion-icon>
+      </button>
+      </ion-fab>
+   </div>
+</ion-footer>

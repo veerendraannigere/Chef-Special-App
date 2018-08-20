@@ -1,0 +1,135 @@
+<ion-header>
+    <ion-navbar>
+       <ion-title>Create an Account</ion-title>
+    </ion-navbar>
+ </ion-header>
+ <ion-content class="register">
+    <ion-simple-wizard [(step)]="step" [showSteps]="false" (finish)="onFinish()" [finishIcon]="'done-all'" [(stepCondition)]="stepCondition">
+    <ion-wizard-step class="cs-wizard">
+       <div style="padding: 10px 10px 0 10px;">
+          <button class="fb-btn" ion-button block icon-left (click)="facebookLogin()">
+             <ion-icon name="logo-facebook"></ion-icon>
+             FaceBook
+          </button>
+          <button class="google-btn" ion-button block icon-left (click)="googleLogin()">
+             <ion-icon name="logo-google"></ion-icon>
+             Google
+          </button>
+       </div>
+       <div style="text-align: center">
+          <p>or</p>
+       </div>
+       <ion-list>
+          <form (ngSubmit)="register(form.value)" [formGroup]="form">
+          <ion-item>
+             <ion-input type="text" placeholder="First Name" required [formControl]="first_name" name="first_name" id="first_name" (ionChange)="inputChange($event)"></ion-input>
+          </ion-item>
+          <div class="error">
+             <small *ngIf="!first_name.valid && (first_name.touched)">First Name Required</small>
+          </div>
+          <ion-item>
+             <ion-input type="text" placeholder="Last Name"  [formControl]="last_name" (ionChange)="inputChange($event)"></ion-input>
+          </ion-item>
+          <ion-grid class="custom-grid">
+             <ion-row align-items-center>
+                <ion-col col-2 class="nopad countrycode">
+                   <button type="button" mode="ios" class="clear" (click)="pop($event)" icon-end>
+                      {{ctrycodenum}}
+                      <ion-icon name="md-arrow-dropdown"></ion-icon>
+                   </button>
+                </ion-col>
+                <ion-col col-10 class="nopad">
+                   <ion-input type="number" placeholder="Phone" required [formControl]="phone_number" ></ion-input>
+                </ion-col>
+             </ion-row>
+          </ion-grid>
+          <ion-item>
+             <ion-checkbox checked="true" value="go" color="danger"  (ionChange)="dealAlert($event)" ></ion-checkbox>
+             <ion-label>Get deal alerts on your phone</ion-label>
+          </ion-item>
+          <ion-item>
+             <ion-input type="email" placeholder="Email Id" required [formControl]="email" (ionChange)="inputChange($event)"></ion-input>
+             <div class="error">
+                <small *ngIf="!email.valid && (email.touched)">Email is Required</small>
+             </div>
+          </ion-item>
+          <ion-item>
+             <ion-input type="password" required [formControl]="password" name="password" placeholder="Password" id="password" (ionChange)="inputChange($event)"></ion-input>
+          </ion-item>
+          <div class="error">
+             <small *ngIf="!password.valid && (password.touched)">Password Required </small>
+          </div>
+          <ion-item>
+             <ion-input type="password" required [formControl]="repeatPassword" name="repeatPassword" placeholder="Confirm Password" id="repeatPassword"
+             (ionChange)="inputChange($event)"></ion-input>
+          </ion-item>
+          <div class="error">
+             <small *ngIf="!passwords.valid && (password.touched || repeatPassword.touched)">Passwords don't match.</small>
+          </div>
+          <p style="padding: 18px;">By selecting "Continue" or signing with Facebook or Google, you agree to terms and conditions of chef
+             special terms of User and Privacy Policy
+          </p>
+          </form>
+       </ion-list>
+    </ion-wizard-step>
+    <ion-wizard-step>
+       <div>
+          <div class="cs-img-section" *ngIf="foodPreference">
+             <img style="width: 80px;" src="{{imgUrl}}{{foodPreference[0].filename}}"  onerror="this.src='assets/imgs/no-image_v2.png'">
+          </div>
+          <div class="cs-seperater"></div>
+          <div style="margin: 15px;">
+             <h5>Food Preference</h5>
+             <p>Tell us more about your favorite dish and we will get best restaurants for you</p>
+          </div>
+          <div class="cs-seperater"></div>
+          <ion-list>
+             <ion-item mode="ios" *ngFor="let item of foodPreference">
+                <ion-label>{{item.name}}</ion-label>
+                <ion-checkbox mode="ios" color="dark" [(ngModel)]="item.active" name="{{item.name}}" (ionChange)="foodChanged($event,item)"></ion-checkbox>
+             </ion-item>
+          </ion-list>
+       </div>
+    </ion-wizard-step>
+    <ion-wizard-step>
+       <div>
+          <div class="cs-img-section" *ngIf="dietPreference">
+             <img style="width: 80px;" src="{{imgUrl}}{{dietPreference[0].filename}}"  onerror="this.src='assets/imgs/no-image_v2.png'">
+          </div>
+          <div class="cs-seperater"></div>
+          <div style="margin: 15px;">
+             <h5>Diet Preference</h5>
+             <p>Tell us more about your favorite dish and we will get best restaurants for you</p>
+          </div>
+          <div class="cs-seperater"></div>
+          <ion-list>
+             <ion-item mode="ios" *ngFor="let item of dietPreference">
+                <ion-label>{{item.name}}</ion-label>
+                <ion-checkbox mode="ios" color="dark" [(ngModel)]="item.active" name="{{item.name}}" (ionChange)="dietChanged($event,item)"></ion-checkbox>
+             </ion-item>
+          </ion-list>
+       </div>
+    </ion-wizard-step>
+    <ion-wizard-step>
+       <div>
+          <div class="cs-img-section" *ngIf="cuisinePreference">
+             <img style="width: 80px;" src="{{imgUrl}}{{cuisinePreference[0].filename}}"  onerror="this.src='assets/imgs/no-image_v2.png'">
+          </div>
+          <div class="cs-seperater"></div>
+          <div style="margin: 15px;">
+             <h5>Cuisine Preference</h5>
+             <p>Tell us more about your favorite dish and we will get best restaurants for you</p>
+          </div>
+          <div class="cs-seperater"></div>
+          <ion-scroll scrollY="true" style="height: 340px;">
+             <ion-list>
+                <ion-item mode="ios" *ngFor="let item of cuisinePreference">
+                   <ion-label>{{item.name}}</ion-label>
+                   <ion-checkbox mode="ios" color="dark" [(ngModel)]="item.active" name="{{item.name}}" (ionChange)="cuisineChanged($event,item)"></ion-checkbox>
+                </ion-item>
+             </ion-list>
+          </ion-scroll>
+       </div>
+    </ion-wizard-step>
+    </ion-simple-wizard>
+ </ion-content>

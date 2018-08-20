@@ -1,0 +1,24 @@
+page-filter {
+    .innerfilter ion-item .item-inner{
+        border-bottom: 0px !important;
+   }
+    .cs-footer{
+        position: absolute;
+        bottom: 0;
+        padding: 0;
+   }
+    .cs-wizard .cs-footer , .cs-footer ion-row , .cs-footer ion-col{
+        padding: 0;
+   }
+    .cs-footer button{
+        margin: 0;
+        padding: 0;
+   }
+    .filterClass .scroll-content{
+        bottom:30px;
+   }
+    .checkbox-md .checkbox-checked {
+        border-color: #f53d3d !important;
+        background-color: #f53d3d !important;
+   }
+}

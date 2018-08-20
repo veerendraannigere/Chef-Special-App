@@ -1,0 +1,153 @@
+<ion-header>
+  <ion-navbar>
+     <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+     </button>
+     <ion-searchbar class="margtop" (click)="gottoSearch()" placeholder="Type a City"></ion-searchbar>
+  </ion-navbar>
+  <ion-toolbar>
+     <ion-title text-center>{{greet}}!</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="cs-tab-container">
+     <ion-segment class="margtop"[(ngModel)]="tabs" color="danger" (ionChange)="onSegmentChange($event)">
+     <ion-segment-button value="chefspecial">
+        ChefSpecial
+     </ion-segment-button>
+     <ion-segment-button value="deals">
+        Deals
+     </ion-segment-button>
+     <ion-segment-button value="restaurant">
+        All Restaurants
+     </ion-segment-button>
+     </ion-segment>
+  </div>
+  <div [ngSwitch]="tabs">
+     <ion-list *ngSwitchCase="'chefspecial'">
+        <ion-item (click)="openMenu()">
+           <ion-thumbnail item-start>
+              <img-loader src="" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'" [useImg]="true"></img-loader>
+           </ion-thumbnail>
+           <div>
+              <h2 class="restauranthead">Lemon Moon Cake</h2>
+              <rating max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false" (ngModelChange)="onModelChange($event)"
+              readOnly="true" [(ngModel)]="star_ratings"></rating>
+              <a href="#">Empire Restaurant</a>
+              <p class="decp">Sponge cake with Lemon Curd. Vanilla Ice Cream</p>
+           </div>
+        </ion-item>
+        <ion-item  (click)="openMenu()">
+           <ion-thumbnail item-start>
+              <img-loader src="" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'" [useImg]="true"></img-loader>
+           </ion-thumbnail>
+           <div>
+              <h2 class="restauranthead">Lemon Moon Cake</h2>
+              <rating max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false" (ngModelChange)="onModelChange($event)"
+              readOnly="true" [(ngModel)]="star_ratings"></rating>
+              <a href="#">Empire Restaurant</a>
+              <p class="decp">Sponge cake with Lemon Curd. Vanilla Ice Cream</p>
+           </div>
+        </ion-item>
+        <ion-item  (click)="openMenu()">
+           <ion-thumbnail item-start>
+              <img-loader src="" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'" [useImg]="true"></img-loader>
+           </ion-thumbnail>
+           <div>
+              <h2 class="restauranthead">French Fries</h2>
+              <rating max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false" (ngModelChange)="onModelChange($event)"
+              readOnly="true" [(ngModel)]="star_ratings"></rating>
+              <a href="#">Empire Restaurant</a>
+              <p class="decp">Sponge cake with Lemon Curd. Vanilla Ice Cream</p>
+           </div>
+        </ion-item>
+        <ion-item>
+           <ion-thumbnail item-start>
+              <img-loader src="" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'" [useImg]="true"></img-loader>
+           </ion-thumbnail>
+           <div>
+              <h2 class="restauranthead">Italian Pizza</h2>
+              <rating max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false" (ngModelChange)="onModelChange($event)"
+              readOnly="true" [(ngModel)]="star_ratings"></rating>
+              <p class="linkgap">
+                 <a href="#">Empire Restaurant</a>
+              </p>
+              <p class="decp">Sponge cake with Lemon Curd. Vanilla Ice Cream</p>
+           </div>
+        </ion-item>
+     </ion-list>
+     <ion-list *ngSwitchCase="'deals'">
+        <ion-item (click)="opendealDetails('1')">
+           <ion-thumbnail item-start>
+              <img-loader src="" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'" [useImg]="true"></img-loader>
+           </ion-thumbnail>
+           <h2 class="restauranthead danger">Deal Title</h2>
+           <h2 class="restauranthead danger">20.00$ OFF</h2>
+           <a href="#">Empire Restaurant</a>
+           <p class="decp">A great deal an amazing value! With ICICI Bank </p>
+        </ion-item>
+        <ion-item (click)="opendealDetails('1')">
+           <ion-thumbnail item-start>
+              <img-loader src="" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'" [useImg]="true"></img-loader>
+           </ion-thumbnail>
+           <h2 class="restauranthead danger">Deal Title</h2>
+           <h2 class="restauranthead danger">20.00$ OFF</h2>
+           <a href="#">Empire Restaurant</a>
+           <p class="decp">A great deal an amazing value! With ICICI Bank </p>
+        </ion-item>
+        <ion-item (click)="opendealDetails('1')">
+           <ion-thumbnail item-start>
+              <img-loader src="" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'" [useImg]="true"></img-loader>
+           </ion-thumbnail>
+           <h2 class="restauranthead danger">Deal Title</h2>
+           <h2 class="restauranthead danger">20.00$ OFF</h2>
+           <a href="#">Empire Restaurant</a>
+           <p class="decp">A great deal an amazing value! With ICICI Bank </p>
+        </ion-item>
+        <ion-item (click)="opendealDetails('1')">
+           <ion-thumbnail item-start>
+              <img-loader src="" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'" [useImg]="true"></img-loader>
+           </ion-thumbnail>
+           <h2 class="restauranthead danger">Deal Title</h2>
+           <h2 class="restauranthead danger">20.00$ OFF</h2>
+           <a href="#">Empire Restaurant</a>
+           <p class="decp">A great deal an amazing value! With ICICI Bank </p>
+        </ion-item>
+     </ion-list>
+     <div *ngSwitchCase="'restaurant'">
+        <ion-list>
+           <div *ngIf="getAllRestaurant && getAllRestaurant.length>0; else elseBlock">
+              <div *ngFor="let item of getAllRestaurant">
+                 <ion-item>
+                    <ion-thumbnail item-start (click)="navToDetails(item)">
+                       <img-loader src="{{resImgUrl}}{{item.profile_image}}" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'" [useImg]="true"></img-loader>
+                    </ion-thumbnail>
+                    <div (click)="navToDetails(item)">
+                       <h2 class="restauranthead">{{item.title}}</h2>
+                       <rating max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false" (ngModelChange)="onModelChange($event)"
+                       readOnly="true" [(ngModel)]="item.star_ratings"></rating>
+                       <span float-right *ngIf="item.distance">
+                          <small>
+                             <ion-icon name="pin"></ion-icon>
+                             &nbsp;{{item.distance}}km
+                          </small>
+                       </span>
+                    </div>
+                    <div>
+                       <button ion-button color="danger" (click)="gotodeals(item)">Deals</button>
+                       <button ion-button color="danger" (click)="gotomenu(item)">Today's Spl</button>
+                    </div>
+                 </ion-item>
+              </div>
+           </div>
+           <ng-template #elseBlock>
+              <ion-list>
+                 <br>
+                 <br>
+                 <h6 text-center>No Restaurants Found</h6>
+              </ion-list>
+           </ng-template>
+        </ion-list>
+     </div>
+  </div>
+</ion-content>

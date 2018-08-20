@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar>
+       <ion-title>General Settings</ion-title>
+       <ion-buttons end>
+          <button ion-button clear mode="ios" (click)="closeModal()">
+             <ion-icon name="close"></ion-icon>
+          </button>
+       </ion-buttons>
+    </ion-navbar>
+ </ion-header>
+ <ion-content >
+    <div *ngIf="userDetails else elseBlock">
+       <div class="cs-img-sections cs-bg-imgs">
+          <img src="assets/imgs/dummy-profile-pic-male1.jpg">
+          <div class="cs-profile">
+             <h5 text-capitalize>{{userDetails.user.first_name}} {{userDetails.user.last_name}}</h5>
+          </div>
+       </div>
+       <div padding class="userData">
+          <ion-list>
+             <ion-grid>
+                <ion-row>
+                   <ion-col col-4 text-center>
+                      <label class="danger">Contact</label>
+                   </ion-col>
+                   <ion-col col-8>
+                      <span><strong><label class="danger">:</label> {{userDetails.user.mobile}}</strong></span>
+                   </ion-col>
+                </ion-row>
+                <ion-row>
+                   <ion-col col-4 text-center>
+                      <label class="danger">Email</label>
+                   </ion-col>
+                   <ion-col col-8>
+                      <span><strong><label class="danger">:</label> {{userDetails.user.email}}</strong></span>
+                   </ion-col>
+                </ion-row>
+             </ion-grid>
+             <br>
+             <br>
+             <button ion-button block color="light" (click)="gotoProfile()">Update Profile</button>
+             <br>
+             <button ion-button block color="danger" (click)="presentConfirm()">Deactivate Profile</button>
+          </ion-list>
+       </div>
+    </div>
+    <ng-template #elseBlock>
+       <div text-center>
+          <br>
+          <br>
+          <h5>No Data</h5>
+       </div>
+    </ng-template>
+ </ion-content>

@@ -1,0 +1,42 @@
+<ion-menu [content]="content">
+  <ion-content>
+     <ion-list>
+        <ion-item style="background: #eee;" *ngIf="!showDynamicPage">
+           <ion-avatar item-start>
+              <img src="assets/imgs/dummy-profile-pic-male1.jpg">
+           </ion-avatar>
+           <h2 *ngIf="loginResponse" text-capitalize>{{loginResponse.userName}}</h2>
+           <!-- <p>Ugh. As if.</p> -->
+        </ion-item>
+     </ion-list>
+     <ion-list>
+        <div *ngFor="let p of pages">
+           <button menuClose ion-item (click)="openPage(p)" *ngIf="p.isLoggedIn">
+           <ion-icon name="{{p.icon}}" item-left></ion-icon>
+           {{p.title}}
+           </button>
+        </div>
+        <button menuClose ion-item>
+           <ion-icon name="people" item-left></ion-icon>
+           About
+        </button>
+     </ion-list>
+     <ion-list *ngIf="showDynamicPage">
+        <ion-list-header>New or Existing User</ion-list-header>
+        <div *ngFor="let p of dynamicPages">
+           <button menuClose ion-item (click)="openPage(p)">
+              <ion-icon name="{{p.icon}}" item-left></ion-icon>
+              {{p.title}}
+           </button>
+        </div>
+     </ion-list>
+     <ion-list *ngIf="!showDynamicPage">
+        <button menuClose ion-item (click)="logout()">
+           <ion-icon name="log-out" item-left></ion-icon>
+           Logout
+        </button>
+     </ion-list>
+  </ion-content>
+</ion-menu>
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

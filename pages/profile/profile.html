@@ -1,0 +1,155 @@
+<ion-header>
+    <ion-navbar>
+       <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+       </button>
+       <ion-title>My Profile</ion-title>
+       <ion-buttons end>
+          <button ion-button icon-only mode="ios" (click)="presentPopover($event)">
+             <ion-icon name="more"></ion-icon>
+          </button>
+       </ion-buttons>
+    </ion-navbar>
+ </ion-header>
+ <ion-content>
+    <div class="cs-img-section cs-bg-img" *ngIf="userDetails">
+       <img src="assets/imgs/dummy-profile-pic-male1.jpg">
+       <div class="cs-profile">
+          <h5 text-capitalize>{{userDetails.user.first_name}} {{userDetails.user.last_name}}</h5>
+          <span> {{userDetails.user_following.length}} Following | {{userDetails.user_favroutes.length}} Favorite</span>
+       </div>
+    </div>
+    <div class="cs-tab-container">
+       <ion-segment [(ngModel)]="profile" color="danger"  (ionChange)="onSegmentChange($event)">
+       <ion-segment-button value="favorites">
+          Favorites
+       </ion-segment-button>
+       <ion-segment-button value="notification">
+          Notifications
+       </ion-segment-button>
+       <ion-segment-button value="deals">
+          My Deals
+       </ion-segment-button>
+       <ion-segment-button value="ratings">
+          Ratings
+       </ion-segment-button>
+       </ion-segment>
+       <div *ngIf="userDetails">
+          <div [ngSwitch]="profile">
+             <ion-list *ngSwitchCase="'favorites'">
+                <ion-list *ngIf="userDetails.user_favroutes && userDetails.user_favroutes.length>0; else nofavtblock">
+                   <div *ngFor="let item of favourites">
+                      <ion-item>
+                         <ion-thumbnail item-start (click)="navToDetails(item)">
+                            <img src="{{resImgUrl}}{{item.profile_image}}" onerror="this.src='assets/imgs/no-image_v2.png'">
+                         </ion-thumbnail>
+                         <div (click)="navToDetails(item)">
+                            <h2 style="white-space: initial;">{{item.title}}</h2>
+                            <rating readOnly="true" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false"
+                            [(ngModel)]="item.star_ratings"></rating>
+                            <!-- <small>Continental Thai</small> -->
+                            <span float-right *ngIf="item.distance">
+                               <small>
+                                  <ion-icon name="pin"></ion-icon>
+                                  &nbsp;{{item.distance}}km
+                               </small>
+                            </span>
+                         </div>
+                         <div>
+                            <button ion-button color="danger" (click)="gotodeals(item)">Deals</button>
+                            <button ion-button color="danger" (click)="gotomenu(item)">Today's Spl</button>
+                         </div>
+                      </ion-item>
+                   </div>
+                </ion-list>
+                <ng-template #nofavtblock>
+                   <ion-list>
+                      <br>
+                      <br>
+                      <h6 text-center>No Data Found</h6>
+                   </ion-list>
+                </ng-template>
+             </ion-list>
+             <ion-list *ngSwitchCase="'notification'">
+                <ion-list *ngIf="userDetails.user_notifications && userDetails.user_notifications.length>0; else nonotificationblock">
+                   <div *ngFor="let item of notifications">
+                      <ion-item class="cs-notifi">
+                         <ion-thumbnail item-start>
+                            <img src="{{resImgUrl}}{{item.filename}}" onerror="this.src='https://script.resemmedia.com/images/images/web/no-image_v2.png'">
+                         </ion-thumbnail>
+                         <span float-right class="not-day"><small >{{dayCalculate(item.created_at)}} Days Ago</small></span>
+                         <h6>{{item.title}} </h6>
+                         <p *ngIf="item.announcement">{{item.announcement}}</p>
+                      </ion-item>
+                   </div>
+                </ion-list>
+                <ng-template #nonotificationblock>
+                   <ion-list>
+                      <br>
+                      <br>
+                      <h6 text-center>No Data Found</h6>
+                   </ion-list>
+                </ng-template>
+             </ion-list>
+             <ion-list *ngSwitchCase="'deals'">
+                <ion-list *ngIf="mydeals && mydeals.length>0; else nofollowingblock">
+                   <div *ngFor="let item of mydeals">
+                      <ion-item class="cs-notifi">
+                         <ion-thumbnail item-start>
+                            <img src="{{resImgUrl}}{{item.profile_image}}"  onerror="this.src='assets/imgs/dummy-profile-pic-male1.jpg'" >
+                         </ion-thumbnail>
+                         <h6>{{item.title|ellipsis:35}}</h6>
+                         <ion-badge float-right color="danger"  *ngIf="item.current_stamping< item.max_stamping">On Going</ion-badge>
+                         <ion-badge color="danger" float-right *ngIf="item.current_stamping == item.max_stamping">Completed</ion-badge>
+                         <p *ngIf="item.current_stamping">Current Stamping:
+                            <b>{{item.current_stamping}}</b>
+                         </p>
+                         <p *ngIf="item.max_stamping">Max Stamping:
+                            <b>{{item.max_stamping}}</b>
+                         </p>
+                         <button *ngIf="item.current_stamping == item.max_stamping" ion-button color="danger" (click)="redeemALert(item)">Redeem Code</button>
+                      </ion-item>
+                   </div>
+                </ion-list>
+                <ng-template #nofollowingblock>
+                   <ion-list>
+                      <br>
+                      <br>
+                      <h6 text-center>No Data Found</h6>
+                   </ion-list>
+                </ng-template>
+             </ion-list>
+             <ion-list *ngSwitchCase="'ratings'">
+                <div *ngIf="userDetails.user_ratings && userDetails.user_ratings.length>0; else noratingblock">
+                   <div *ngFor ="let item of ratings">
+                      <ion-card>
+                         <ion-item style="    border-bottom: 1px solid #ddd;">
+                            <ion-avatar item-start>
+                               <img src="{{resImgUrl}}{{item.profile_image}}" onerror="this.src='assets/imgs/no-image_v2.png'">
+                            </ion-avatar>
+                            <h2 style= "white-space: initial;" >{{item.title}}</h2>
+                            <p>{{item.address_line1}}</p>
+                         </ion-item>
+                         <ion-card-content style="padding: 0px 4px;">
+                            <ion-item class="cs-notifi">
+                               <rating readOnly="false" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false"
+                               name="rate" [(ngModel)]="item.stars" ></rating>
+                               <p>You have given {{item.stars}} ratings to  Restaurant of {{item.address_line1}}</p>
+                               <button ion-button clear item-end color="dark">{{dayCalculate(item.created_at)}} Days Ago</button>
+                            </ion-item>
+                         </ion-card-content>
+                      </ion-card>
+                   </div>
+                </div>
+                <ng-template #noratingblock>
+                   <ion-list>
+                      <br>
+                      <br>
+                      <h6 text-center>No Data Found</h6>
+                   </ion-list>
+                </ng-template>
+             </ion-list>
+          </div>
+       </div>
+    </div>
+ </ion-content>

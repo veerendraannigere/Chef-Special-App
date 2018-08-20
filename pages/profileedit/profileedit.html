@@ -1,0 +1,66 @@
+<ion-header>
+    <ion-navbar>
+       <ion-title>Edit Profile</ion-title>
+    </ion-navbar>
+ </ion-header>
+ <ion-content>
+    <div class="cs-img-section cs-bg-img">
+       <img src="assets/imgs/dummy-profile-pic-male1.jpg">
+       <ion-grid>
+          <ion-row>
+             <ion-col col-6 offset-3>
+                <div class="cs-profile">
+                   <h5 text-capitalize>{{userDetails.first_name}} {{userDetails.last_name}}</h5>
+                </div>
+             </ion-col>
+             <ion-col col-3>
+                <br>
+             </ion-col>
+          </ion-row>
+       </ion-grid>
+    </div>
+    <div class="cs-tab-container" *ngIf="userDetails">
+       <form #updateForm="ngForm" (ngSubmit)="updateForm.valid &&  updateProfile() ">
+       <h6 class="subhead">My Information</h6>
+       <ion-item>
+          <ion-icon item-start name="person"></ion-icon>
+          <ion-label floating>First Name</ion-label>
+          <ion-input type="text" [(ngModel)]="userDetails.first_name" name="firstname" #first_name="ngModel" required></ion-input>
+       </ion-item>
+       <div class="error err">
+          <small *ngIf="first_name.errors && (first_name.dirty || first_name.touched || updateForm.submitted)">First Name Required</small>
+       </div>
+       <ion-item>
+          <ion-icon item-start name=""></ion-icon>
+          <ion-label floating>Last Name</ion-label>
+          <ion-input type="text" [(ngModel)]="userDetails.last_name" name="lastname" #last_name="ngModel" required></ion-input>
+       </ion-item>
+       <div class="error err">
+          <small *ngIf="last_name.errors && (last_name.dirty || last_name.touched || updateForm.submitted)">Last Name Required</small>
+       </div>
+       <ion-item>
+          <ion-icon item-start name="call"></ion-icon>
+          <ion-label floating>Contact</ion-label>
+          <ion-input type="text" [(ngModel)]="userDetails.mobile" name="mob" #mob="ngModel"></ion-input>
+       </ion-item>
+       <ion-item>
+          <ion-icon item-start name="mail"></ion-icon>
+          <ion-label floating>Email</ion-label>
+          <ion-input type="text" [(ngModel)]="userDetails.email" name="email" #eml="ngModel" required></ion-input>
+       </ion-item>
+       <div class="error err">
+          <small *ngIf="eml.errors && (eml.dirty || eml.touched || updateForm.submitted)">Email is Required</small>
+       </div>
+       <ion-item>
+          <ion-checkbox checked="true" value="go" color="danger" (ionChange)="dealAlert($event)"></ion-checkbox>
+          <ion-label>Get deal alerts on your phone</ion-label>
+       </ion-item>
+       <ion-grid text-uppercase padding>
+          <button ion-button block color="light" (click)="changePassword()" type="button">Change Password</button>
+       </ion-grid>
+       <ion-grid text-uppercase padding>
+          <button ion-button block color="danger">Save Details</button>
+       </ion-grid>
+       </form>
+    </div>
+ </ion-content>

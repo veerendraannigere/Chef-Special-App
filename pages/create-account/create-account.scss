@@ -1,0 +1,73 @@
+page-create-account {
+   .cs-wizard{
+       width:100%;
+   }
+
+   .fb-btn{
+    background: #3b5998;
+    height: 5rem;
+   }
+
+   .fb-btn ion-icon , .google-btn ion-icon{
+       font-size: 2.4em;
+   }
+
+   .google-btn{
+    background: #cd3c2a;;
+    height: 5rem;
+   }
+
+   .cs-img-section{
+     width:100%; height:100%;
+         padding: 8px;
+   }
+
+   .cs-img-section img {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+.cs-seperater{
+    border-bottom: 1px solid #222;
+    padding: 2px;
+}
+.custom-grid{
+    padding-left: 18px;
+    padding-right: 0px;
+}
+.custom-grid .row{
+    border-bottom:1px solid #dedede;
+    
+}
+.nopad{
+    padding:0px !important;
+}
+.countrycls{
+    font-size: 21px;
+    margin-left: 6px;
+}
+.ctycode{
+    padding: 13px 0px 13px 0px !important;
+    width:100%;
+    max-width:100% !important;
+}
+.ctycode .select-icon .select-icon-inner{
+    left:0px !important;
+}
+.countrycode .error{
+    position: absolute;
+    z-index: 99;
+    top:50px;
+}
+.register .scroll-content{
+    margin-bottom: 15px;
+}
+.clear{
+    width: 100%;
+    background: transparent;
+}
+button[disabled], [ion-button][disabled]{
+    opacity: .8;
+}
+}

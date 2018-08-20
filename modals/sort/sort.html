@@ -1,0 +1,10 @@
+<ion-content>
+  <ion-list>
+    <ion-list-header mode="ios" text-center class="sorthead">
+      <h4>SORT BY</h4>
+    </ion-list-header>
+    <button class="sortbutton" ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+      {{ item.name }}
+    </button>
+  </ion-list>
+</ion-content>

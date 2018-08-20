@@ -1,0 +1,43 @@
+.toolbar-background-md {
+    background: #f53d3d;
+}
+.toolbar-title-md{
+    color:#fff;
+}
+ion-navbar button{
+    color:#fff !important;
+}
+.img-overlay{
+    position: absolute;
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+}
+.error{
+    color:red;
+    padding-left:5%;
+}
+.nomargintop{
+    margin-top:0px !important;
+}
+.filterClass {
+    padding:0px !important;
+}
+.cs-restaurant-title h4{
+    font-size:1.7rem;
+}
+/*Ios*/
+.toolbar-background-ios{
+    background: #f53d3d;
+}
+.item-ios h2{
+    font-size: 1.5rem;
+}
+.toolbar-title-ios{
+    color:#fff;
+}
+.menu-inner .list-ios {
+    margin: auto;
+}

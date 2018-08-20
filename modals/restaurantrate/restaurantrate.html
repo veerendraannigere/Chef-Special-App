@@ -1,0 +1,10 @@
+
+<ion-content class="filterClass" padding>
+  <ion-list>
+    <h5 text-center>Rate This Restaurant</h5>
+      <rating  max="5" emptyStarIconName="star-outline" [(ngModel)]="ratePayload.stars" name="star" halfStarIconName="star-half"
+      starIconName="star" nullable="false" ></rating>
+  </ion-list>
+  <button ion-button block (click)="postRating()" [disabled]="!ratePayload.stars">Rate</button>
+  
+</ion-content>

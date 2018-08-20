@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar>
+       <ion-title>Notifications</ion-title>
+       <ion-buttons end>
+          <button ion-button clear mode="ios" (click)="closeModal()">
+             <ion-icon name="close"></ion-icon>
+          </button>
+       </ion-buttons>
+    </ion-navbar>
+ </ion-header>
+ <ion-content>
+    <ion-item-group>
+       <ion-item-divider color="light">Manage your notification settings</ion-item-divider>
+       <ion-list>
+          <ion-item>
+             <ion-label>
+                Send Deals notifications  
+                <ion-icon ios="ios-help-circle" md="md-help-circle" color="danger"></ion-icon>
+             </ion-label>
+             <ion-toggle name="deals"  [(ngModel)]="dealsFlag"  (ionChange)="deals($event)"></ion-toggle>
+          </ion-item>
+          <ion-item>
+             <ion-label>
+                Send Menu notifications  
+                <ion-icon ios="ios-help-circle" md="md-help-circle" color="danger"></ion-icon>
+             </ion-label>
+             <ion-toggle  [(ngModel)]="menuFlag" (ionChange)="menu($event)"></ion-toggle>
+          </ion-item>
+          <ion-item>
+             <ion-label>
+                Send Announcement notifications  
+                <ion-icon ios="ios-help-circle" md="md-help-circle" color="danger"></ion-icon>
+             </ion-label>
+             <ion-toggle  [(ngModel)]="announcementFlag" (ionChange)="announcement($event)"></ion-toggle>
+          </ion-item>
+       </ion-list>
+    </ion-item-group>
+ </ion-content>

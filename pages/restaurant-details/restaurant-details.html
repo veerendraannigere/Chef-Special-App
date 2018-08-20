@@ -1,0 +1,393 @@
+<ion-header>
+  <ion-navbar>
+     <ion-title></ion-title>
+     <ion-buttons end>
+        <button ion-button icon-only mode="ios" (click)="share()">
+           <ion-icon name="share"></ion-icon>
+        </button>
+     </ion-buttons>
+     <ion-buttons end *ngIf="showButton">
+        <button *ngIf="!favroutesFlag" ion-button (click)="postfavt('1')" icon-only mode="ios">
+        <ion-icon name="heart-outline"></ion-icon>
+        </button>
+        <button *ngIf="favroutesFlag" ion-button (click)="postfavt('0')" icon-only mode="ios">
+        <ion-icon name="heart-dislike"></ion-icon>
+        </button>
+     </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <!--<div id="map"></div>-->
+  <div class="cs-tab-container">
+     <ion-segment [(ngModel)]="restaurant" color="danger" (ionChange)="onSegmentChange($event)">
+     <ion-segment-button value="overview">
+        Overview
+     </ion-segment-button>
+     <ion-segment-button value="menu">
+        Menu
+     </ion-segment-button>
+     <ion-segment-button value="deals">
+        Deals
+     </ion-segment-button>
+     <ion-segment-button value="ratings">
+        Ratings
+     </ion-segment-button>
+     <ion-segment-button value="loyalty">
+        Loyalty
+     </ion-segment-button>
+     </ion-segment>
+     <div [ngSwitch]="restaurant">
+        <ion-list *ngSwitchCase="'overview'">
+           <div *ngIf="overview;else nooverview">
+              <div *ngIf="photos && photos.length >0 && photos[0].filename;else block" class="cs-img-section cs-bg-img cs-img-bg" [ngStyle]="{'background-image': 'url(' + resImgUrl+photos[0].filename + ')'}">
+              <button ion-button color="danger" *ngIf="!followingFlag" class="cs-fallow-btn" (click)="postfollowing(1)">Follow</button>
+              <button ion-button color="danger" *ngIf="followingFlag" class="cs-fallow-btn" (click)="postfollowing(0)">UnFollow</button>
+              <div class="imgdiv"><img-loader  src="{{resImgUrl}}{{overview.profile_image}}" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'"  [useImg]="true"></img-loader></div>
+           </div>
+           <ng-template #block>
+              <div  class="cs-img-section cs-bg-img cs-img-bg" [ngStyle]="{'background-image': 'url(\'assets/imgs/no-image_v2.png\')'}">
+                 <button ion-button color="danger" *ngIf="!followingFlag" class="cs-fallow-btn" (click)="postfollowing(1)">Follow</button>
+                 <button ion-button color="danger" *ngIf="followingFlag" class="cs-fallow-btn" (click)="postfollowing(0)">UnFollow</button>
+                 <div class="imgdiv"><img-loader  src="{{resImgUrl}}{{overview.profile_image}}" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'"  [useImg]="true"></img-loader></div>
+              </div>
+           </ng-template>
+           <div class="cs-restaurant-title">
+              <h4>{{overview.title}}</h4>
+              <ion-grid class="zeropad">
+                 <ion-row>
+                    <ion-col col-12 class="zeropad">
+                       <rating readOnly="true" max="5" emptyStarIconName="star-outline" [(ngModel)]="restaurantRate" name="star" halfStarIconName="star-half"
+                       starIconName="star" nullable="false" readOnly="true"></rating>
+                    </ion-col>
+                    <ion-col col-6>
+                       <a class="ratedish" (click)="giverestaurantRate($event)">
+                       <small>Rate This</small>
+                       </a>
+                    </ion-col>
+                 </ion-row>
+              </ion-grid>
+           </div>
+           <div class="cs-res-details">
+              <h5 class="cs-subtitle-1">About the Restaurant</h5>
+              <ion-list>
+                 <ion-item>
+                    <ion-icon name="call" item-start></ion-icon>
+                    Phone Numbers
+                    <p style="margin-top: 6px;">{{overview.phone}}</p>
+                    <p>{{overview.phone2}}</p>
+                 </ion-item>
+                 <ion-item>
+                    <ion-icon name="mail" item-start></ion-icon>
+                    Email
+                    <p>{{overview.email}}</p>
+                 </ion-item>
+                 <ion-item>
+                    <ion-icon ios="ios-timer" md="md-timer" item-start></ion-icon>
+                    Opening Hours
+                    <p style="margin-top: 6px;" *ngFor="let day of opening_hours_temp; let i=index">
+                       Day&nbsp;{{day.day}}&nbsp;from&nbsp;{{day.open_time}}&nbsp;to&nbsp;{{day.close_time}}
+                    </p>
+                    <button *ngIf="opening_hours_temp.length <=2" ion-button clear (click)="showMore()">See More</button>
+                    <button *ngIf="opening_hours_temp.length>2" ion-button clear (click)="showLess()">See Less</button>
+                 </ion-item>
+                 <ion-item>
+                    <ion-icon name="pizza" item-start></ion-icon>
+                    Cuisines
+                    <div>
+                       <p *ngFor="let item of overview.cuisines">
+                          {{item.name}}
+                       </p>
+                    </div>
+                 </ion-item>
+                 <ion-item>
+                    <ion-icon name="locate" item-start></ion-icon>
+                    Address
+                    <p>{{overview.address_line1}}</p>
+                    <p>{{overview.address_line2}}</p>
+                 </ion-item>
+              </ion-list>
+           </div>
+           <div style="height: 200px">
+              <div id="map"></div>
+           </div>
+           <ion-item>
+              <ion-icon name="list-box" item-start> </ion-icon>
+              Description
+              <p>{{overview.description}}</p>
+           </ion-item>
+     </div>
+     <ng-template #nooverview>
+     <div text-center>
+     <br>
+     <br> No Record Found
+     </div>
+     </ng-template>
+     </ion-list>
+     <ion-list *ngSwitchCase="'menu'">
+        <div *ngIf="menus;else elseBlock">
+           <div *ngFor="let d of data">
+              <ion-item (click)="toggleDetails(d)" class="cs-menu-item">
+                 <ion-icon color="primary" item-right [name]="d.icon"></ion-icon>
+                 <span text-capitalize> {{d.filterName}}</span>
+              </ion-item>
+              <div *ngIf="d.showDetails">
+                 <ion-list>
+                    <div *ngIf="d.source">
+                       <ion-item class="cs-notifi" *ngFor="let menu of d.source">
+                          <h2>
+                             {{menu.name}} &nbsp;
+                             <small>
+                                <ion-badge color="danger">
+                                   {{round(menu.rating)}}
+                                   <ion-icon ios="ios-star" md="md-star"></ion-icon>
+                                </ion-badge>
+                             </small>
+                          </h2>
+                          <a class="ratedish" (click)="givedishRate($event,menu)">
+                          <small>Rate This Dish</small>
+                          </a>
+                          <p text-justify>{{menu.description}}</p>
+                          <button ion-button clear icon-left item-end color="dark">{{menu.price}}</button>
+                       </ion-item>
+                    </div>
+                 </ion-list>
+              </div>
+           </div>
+        </div>
+        <ng-template #elseBlock>
+           <div text-center>
+              <br>
+              <br> No Record Found
+           </div>
+        </ng-template>
+     </ion-list>
+     <ion-list *ngSwitchCase="'deals'" class="card-background-page">
+        <div *ngIf="deals && deals.length>0; else nodeal">
+           <ion-card *ngFor="let item of deals" (click)="opendealDetails(item.id)">
+           <div class="img-overlay"></div>
+           <img-loader  src="{{dealsImgUrl}}{{item.filename}}"  [fallback]="'assets/imgs/no-image_v2.png'" [spinner]="true"  [useImg]="true"></img-loader>
+           <div class="card-title">{{item.name}}</div>
+           <div class="card-subtitle" *ngIf="item.description">{{item.description|ellipsis:100 }}</div>
+           </ion-card>
+        </div>
+        <ng-template #nodeal>
+           <div text-center>
+              <br>
+              <br> No Record Found
+           </div>
+        </ng-template>
+     </ion-list>
+     <ion-list *ngSwitchCase="'ratings'" class="cs-rating">
+        <div *ngIf="starRatings;else noRate">
+           <div style="padding: 0 15px;">
+              <h3>Summary</h3>
+              <ion-grid style="padding: 0;">
+                 <ion-row>
+                    <ion-col col-6 class="cs-rating-right">
+                       <p style="color: #8c8a8a;margin: 2px;">Overall Rating</p>
+                       <span *ngIf="restaurantRate">{{restaurantRate}}</span>
+                       <rating *ngIf="restaurantRate" max="5"  emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" [(ngModel)]="restaurantRate"
+                       name="overallrate" nullable="false" readOnly="true"></rating>
+                    </ion-col>
+                    <ion-col col-6>
+                       <div class="pull-left">
+                          <ion-row>
+                             <ion-col col-3>
+                                <div class="pull-left" style="width:35px; line-height:1;">
+                                   <div>
+                                      <strong>5</strong>
+                                      <ion-icon name="star-outline"></ion-icon>
+                                   </div>
+                                </div>
+                             </ion-col>
+                             <ion-col col-8 class="noleftpad">
+                                <div class="pull-left" style="width:110px;">
+                                   <div class="progress">
+                                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" [ngStyle]="{width:fiveStar+'%'}">
+                                      </div>
+                                   </div>
+                                </div>
+                             </ion-col>
+                          </ion-row>
+                       </div>
+                       <div class="pull-left">
+                          <ion-row>
+                             <ion-col col-3>
+                                <div class="pull-left" style="width:35px; line-height:1;">
+                                   <div>
+                                      <strong>4</strong>
+                                      <ion-icon name="star-outline"></ion-icon>
+                                   </div>
+                                </div>
+                             </ion-col>
+                             <ion-col col-8 class="noleftpad">
+                                <div class="pull-left" style="width:110px;">
+                                   <div class="progress">
+                                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" [ngStyle]="{width:fourStar+'%'}">
+                                      </div>
+                                   </div>
+                                </div>
+                             </ion-col>
+                          </ion-row>
+                       </div>
+                       <div class="pull-left">
+                          <ion-row>
+                             <ion-col col-3>
+                                <div class="pull-left" style="width:35px; line-height:1;">
+                                   <div>
+                                      <strong>3</strong>
+                                      <ion-icon name="star-outline"></ion-icon>
+                                   </div>
+                                </div>
+                             </ion-col>
+                             <ion-col col-8 class="noleftpad">
+                                <div class="pull-left" style="width:110px;">
+                                   <div class="progress">
+                                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" [ngStyle]="{width:threeStar+'%'}">
+                                      </div>
+                                   </div>
+                                </div>
+                             </ion-col>
+                          </ion-row>
+                       </div>
+                       <div class="pull-left">
+                          <ion-row>
+                             <ion-col col-3>
+                                <div class="pull-left" style="width:35px; line-height:1;">
+                                   <div>
+                                      <strong>2</strong>
+                                      <ion-icon name="star-outline"></ion-icon>
+                                   </div>
+                                </div>
+                             </ion-col>
+                             <ion-col col-8 class="noleftpad">
+                                <div class="pull-left" style="width:110px;">
+                                   <div class="progress">
+                                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" [ngStyle]="{width:twoStar+'%'}">
+                                      </div>
+                                   </div>
+                                </div>
+                             </ion-col>
+                          </ion-row>
+                       </div>
+                       <div class="pull-left">
+                          <ion-row>
+                             <ion-col col-3>
+                                <div class="pull-left" style="width:35px; line-height:1;">
+                                   <div>
+                                      <strong>1</strong>
+                                      <ion-icon name="star-outline"></ion-icon>
+                                   </div>
+                                </div>
+                             </ion-col>
+                             <ion-col col-8 class="noleftpad">
+                                <div class="pull-left" style="width:110px;">
+                                   <div class="progress">
+                                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" [ngStyle]="{width:oneStar+'%'}">
+                                      </div>
+                                   </div>
+                                </div>
+                             </ion-col>
+                          </ion-row>
+                       </div>
+                    </ion-col>
+                 </ion-row>
+              </ion-grid>
+              <p style="color: #8c8a8a;">{{overAllpercent}}% people would recommend it to their friends</p>
+           </div>
+           <ion-grid class="cs-rating-grid">
+              <ion-row>
+                 <ion-col col-6 class="cs-rating-count">
+                    <p style="margin: 0.6em;">Dish</p>
+                    <span>{{dishRate}}</span>
+                 </ion-col>
+                 <ion-col col-6 class="cs-rating-count">
+                    <p style="margin: 0.6em;">Restaurant</p>
+                    <span>{{restaurantRate}}</span>
+                 </ion-col>
+              </ion-row>
+           </ion-grid>
+           <ion-list *ngIf="recentRating">
+              <ion-item-group>
+                 <ion-item-divider color="light">Most Recent Ratings </ion-item-divider>
+                 <div *ngFor="let item of recentRating">
+                    <ion-item>
+                       <ion-grid class="zeropad">
+                          <ion-row>
+                             <ion-col col-3 class="zeropad">
+                                <ion-thumbnail item-start>
+                                   <img src="assets/imgs/dummy-profile-pic-male1.jpg">
+                                </ion-thumbnail>
+                             </ion-col>
+                             <ion-col col-9 class="">
+                                <h2>{{item.first_name}}</h2>
+                                <ion-grid class="zeropad">
+                                   <ion-row>
+                                      <ion-col col-6 class="zeropad">
+                                         <small>{{item.stars}} Rating</small>
+                                         <rating readOnly="true" max="5" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.stars" emptyStarIconName="star-outline"
+                                         halfStarIconName="star-half" starIconName="star" nullable="false"></rating>
+                                      </ion-col>
+                                      <ion-col col-6 text-right class="zeropad">
+                                         <small>{{dayCalculate(item.updated_at)}} Days Ago</small>
+                                      </ion-col>
+                                   </ion-row>
+                                </ion-grid>
+                             </ion-col>
+                          </ion-row>
+                       </ion-grid>
+                    </ion-item>
+                 </div>
+              </ion-item-group>
+           </ion-list>
+        </div>
+        <ng-template #norate>
+           <div text-center>
+              <br>
+              <br> No Record Found
+           </div>
+        </ng-template>
+     </ion-list>
+     <ion-list *ngSwitchCase="'loyalty'">
+        <div style="padding: 0 15px;">
+           <h3>Loyalty Card</h3>
+        </div>
+        <ion-grid>
+           <ion-row>
+              <ion-col>
+                 <div text-justify>
+                    We are happy to offer you Chef Special Loyalty Card values and offers. Now each time you visit '{{overview.title}}' get an opportunity of having a
+                    Chef Special item completely Free ! Yes, each time you visit us order a Chef Special on the menu and get your card stamped, once we see
+                    {{maxStamp}} complete stamps your next Chef Special order is on us ! So time to get your card
+                 </div>
+              </ion-col>
+           </ion-row>
+           <ion-card class="offercard" *ngIf="stampItems && stampItems.length>0">
+              <ion-grid>
+                 <ion-row *ngIf="loyalty">
+                    <ion-col col-6>
+                       <ion-row>
+                          <ion-col col-6 *ngFor="let item of this.stampItems;">
+                             <button class="clear" [disabled]="item.used">
+                             <div class="box" (click)="showPrompt()" [ngClass]="{'used':item.used}">
+                             <span>{{item.i}}</span>
+  </div>
+  </button>
+  </ion-col>
+  </ion-row>
+  </ion-col>
+  <ion-col col-1 class="equal">
+  =
+  </ion-col>
+  <ion-col col-5>
+  <img src="assets/imgs/hamburger-fast-food-icon-75212.png"
+     />
+  </ion-col>
+  </ion-row>
+  </ion-grid>
+  </ion-card>
+  </ion-grid>
+  </ion-list>
+  </div>
+  </div>
+</ion-content>

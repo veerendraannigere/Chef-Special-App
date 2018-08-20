@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+     <ion-toolbar>
+        <ion-title>Deal Details</ion-title>
+        <ion-buttons end>
+           <button ion-button clear mode="ios" (click)="closeModal()">
+              <ion-icon name="close"></ion-icon>
+           </button>
+        </ion-buttons>
+     </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+     <div *ngIf="getDealsDetail">
+        <ion-grid class="detailsbackground">
+           <ion-row>
+              <ion-col col-4>
+                 <img-loader  src="{{dealsImgUrl}}{{getDealsDetail.filename}}" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'"  [useImg]="true"></img-loader>
+              </ion-col>
+              <ion-col col-8>
+                 <h6 class="nomargintop">{{getDealsDetail.name}}</h6>
+              </ion-col>
+           </ion-row>
+        </ion-grid>
+        <ion-item-group>
+           <ion-item-divider color="light">Description</ion-item-divider>
+           <ion-list>
+              <ion-grid>
+                 <ion-row>
+                    <p text-justify>
+                       {{getDealsDetail.description}}
+                    </p>
+                 </ion-row>
+              </ion-grid>
+           </ion-list>
+        </ion-item-group>
+     </div>
+  </ion-list>
+</ion-content>

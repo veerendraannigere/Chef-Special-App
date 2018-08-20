@@ -1,0 +1,14 @@
+<ion-toolbar position="top">Country Code</ion-toolbar>
+<ion-content >
+    <ion-searchbar [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel"  (ionInput)="getItems($event)" (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+    <div class="countrycode">
+        <div *ngFor="let item of tempCountrycode" >
+            <ion-item (click)="closeModal(item)">
+                <h4>{{item}}</h4>
+            </ion-item>
+    
+        </div>
+    </div>
+   
+</ion-content>

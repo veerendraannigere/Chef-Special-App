@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-navbar>
+       <ion-title></ion-title>
+    </ion-navbar>
+ </ion-header>
+ <ion-content >
+    <div class="top-showdiv">
+       <div>
+          <div class="card-title">{{pageDetail}}</div>
+       </div>
+    </div>
+    <div class="card-background-page">
+       <ion-grid>
+          <ion-row  *ngIf="getAllData && getAllData.length>0; else elseBlock">
+             <ion-col col-6 *ngFor="let item of getAllData;let i=index">
+                <ion-card   class="m-height" (click)="gotoRestaurantList(item.slug)">
+                   <div class="img-overlay"></div>
+                   <img-loader  src="{{cusImgUrl}}{{item.filename}}" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'" [useImg]="true"></img-loader>
+                   <div class="card-title" *ngIf="item.name">{{item.name|ellipsis:20 }}</div>
+                   <div class="card-subtitle">{{item.restaurant_count}} restaurants</div>
+                </ion-card>
+             </ion-col>
+          </ion-row>
+          <ng-template #elseBlock>
+             <div text-center>
+                <br>
+                <br>
+                <h6>No Record Found</h6>
+             </div>
+          </ng-template>
+       </ion-grid>
+    </div>
+ </ion-content>

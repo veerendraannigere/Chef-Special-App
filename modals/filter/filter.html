@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+     <ion-title>Filter</ion-title>
+     <ion-buttons end>
+        <button ion-button clear mode="ios" (click)="clearAllFilter()">Clear All</button>
+     </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content class="filterClass">
+  <ion-list>
+     <div *ngFor="let d of data">
+        <ion-item (click)="toggleDetails(d)">
+           <ion-icon color="danger" item-right [name]="d.icon"></ion-icon>
+           {{d.filterName}}
+        </ion-item>
+        <div *ngIf="d.showDetails">
+           <ion-grid style="padding: 0;">
+              <ion-row>
+                 <ion-col class="innerfilter" col-6 style="padding: 0;"  *ngFor="let inner of d.innerFilter">
+                    <ion-item mode="ios">
+                       <ion-checkbox [(ngModel)]="inner.active" (ionChange)="onFilterSelected()" style="margin-right: 10px;"></ion-checkbox>&nbsp;&nbsp;
+                       <ion-label>{{ inner.name }}</ion-label>
+                    </ion-item>
+                 </ion-col>
+              </ion-row>
+           </ion-grid>
+        </div>
+     </div>
+  </ion-list>
+  <ion-footer style="position: fixed">
+     <ion-grid class="cs-footer">
+        <ion-row>
+           <ion-col col-6>
+              <button ion-button block color="dark" (click)="closeModal()">Cancel</button>
+           </ion-col>
+           <ion-col col-6>
+              <button ion-button block color="danger" (click)="filterData()">Apply({{ selFilterCount }}) </button>
+           </ion-col>
+        </ion-row>
+     </ion-grid>
+  </ion-footer>
+</ion-content>

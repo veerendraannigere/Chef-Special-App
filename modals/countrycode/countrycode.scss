@@ -1,0 +1,22 @@
+page-countrycode{
+    .toolbar-md{
+        min-height: 45px;
+        color:#fff;
+        padding-left: 3%;
+        position: fixed;
+    }
+    .searchbar-md{
+        margin-top: 16%;
+        position: fixed;
+        z-index: 999;
+    }
+    .searchbar-md .searchbar-input{
+        box-shadow: none;
+        border-bottom:1px solid #eee;
+    }
+    .countrycode{
+        height: 300px;
+        margin-top: 37%;
+    }
+}
+

@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-navbar>
+       <!--<ion-title>Home</ion-title>-->
+       <ion-toolbar>
+          <ion-title>Menu Details</ion-title>
+          <ion-buttons end>
+             <button ion-button clear mode="ios" (click)="closeModal()">
+                <ion-icon name="close"></ion-icon>
+             </button>
+          </ion-buttons>
+       </ion-toolbar>
+    </ion-navbar>
+ </ion-header>
+ <ion-content>
+    <ion-list>
+       <div>
+          <div class="cs-img-section cs-bg-img cs-img-bg" [ngStyle]="{'background-image': 'url(\'assets/imgs/no-image_v2.png\')'}">
+             <div class="imgdiv">
+                <img-loader src="" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'" [useImg]="true"></img-loader>
+             </div>
+          </div>
+          <div class="cs-restaurant-title" style="margin-bottom:0px">
+             <h4>Menu Name</h4>
+             <rating readOnly="true" max="5" emptyStarIconName="star-outline" [(ngModel)]="restaurantRate" name="star" halfStarIconName="star-half"
+             starIconName="star" nullable="false" readOnly="true"></rating>
+             <a href="#">Empire Restaurant</a>
+          </div>
+          <ion-grid>
+             <ion-row>
+                <ion-col col-12>
+                   <h6 class="nomargtop" >Price: 20$</h6>
+                   <h6 class="nomargtop">Diet Type: Veg</h6>
+                   <h6 class="nomargtop" >Meal Type: Breakfast</h6>
+                   <h6 class="nomargtop">Cuisine: Mexician</h6>
+                   <p>Sponge cake with Lemon Curd, Vanilla Ice Cream</p>
+                </ion-col>
+             </ion-row>
+          </ion-grid>
+       </div>
+    </ion-list>
+ </ion-content>

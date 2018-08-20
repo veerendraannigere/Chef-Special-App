@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+     <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+     </button>
+     <ion-title>Search</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list class="searchselect" >
+     <ion-item>
+        <span>Current Location</span> 
+        <button ion-button clear float-right class="locbtn" (click)="nearby()">
+           <ion-icon name="locate"></ion-icon>
+        </button>
+     </ion-item>
+  </ion-list>
+  <ion-searchbar [(ngModel)]="myInput" placeholder="Search"  (ionChange)="search($event)">
+  </ion-searchbar>
+  <div *ngIf="unFilteredData">
+     <ion-list>
+        <ion-item (click)="gotoRestaurant(item)"  *ngFor="let item of unFilteredData">
+        <strong>
+           <ion-icon  name="locate"></ion-icon>
+        </strong>
+        &nbsp;&nbsp;&nbsp;
+        {{item.label}}
+        </ion-item>
+     </ion-list>
+  </div>
+</ion-content>

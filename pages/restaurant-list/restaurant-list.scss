@@ -1,0 +1,60 @@
+page-restaurant-list {
+  ul {
+      padding: 0px;
+      margin:0;
+      &.rating li {
+          padding: 0px 0px !important;
+          background: none;
+          color: #f53d3d;
+          ion-icon {
+              font-size: 24px;
+         }
+     }
+ }
+  .card-title {
+      font-size: 1.5em;
+      width: 100%;
+      font-weight: bold;
+      color: #fff;
+      text-align: center;
+      padding:37px;
+      background-color: rgba(0,0,0,0.4);
+ }
+  .top-showdiv{
+      background: url('../assets/imgs/background.jpg') no-repeat;
+      height: 100px;
+      background-position:cover;
+      background-position: center;
+      background-repeat: no-repeat;
+ }
+  .ion-wizard-footer {
+      position: fixed;
+      transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0);
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      display: block;
+      width: 100%;
+      text-align: center;
+ }
+  .cs-footer{
+      position: absolute;
+      bottom: 0;
+      padding: 0;
+ }
+  .cs-wizard .cs-footer , .cs-footer ion-row , .cs-footer ion-col{
+      padding: 0;
+ }
+  .cs-footer button{
+      margin: 0;
+      padding: 0;
+ }
+  .scroll-content{
+      margin-bottom:56px;
+ }
+  .restauranthead{
+      word-wrap: break-word;
+      white-space: initial;
+ }
+}

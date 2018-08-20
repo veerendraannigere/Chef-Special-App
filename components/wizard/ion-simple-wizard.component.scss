@@ -1,0 +1,29 @@
+ion-simple-wizard {
+    :host {
+        display: flex;
+        flex-direction: column;
+   }
+    .ion-wizard-footer {
+        position: fixed;
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        display: block;
+        width: 100%;
+        text-align: center;
+   }
+    .cs-footer{
+        position: absolute;
+        bottom: 0;
+        padding: 0;
+   }
+    .cs-wizard .cs-footer , .cs-footer ion-row , .cs-footer ion-col{
+        padding: 0;
+   }
+    .cs-footer button{
+        margin: 0;
+        padding: 0;
+   }
+}

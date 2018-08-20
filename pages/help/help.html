@@ -1,0 +1,58 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Help</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-item-group>
+    <ion-item-divider color="light">About Chef Special</ion-item-divider>
+
+    <ion-list>
+      <ion-item class="cs-menu-item" (click)="gotoreachout('1')">
+        <ion-icon name="ios-arrow-forward" color="danger" item-right></ion-icon>
+        Reach Out
+        <br>
+        <small>Contact us if you have any queries</small>
+      </ion-item>
+      <ion-item class="cs-menu-item" (click)="gotoreachout('2')">
+        <ion-icon name="ios-arrow-forward"  color="danger" item-right></ion-icon>
+        Partner with Us
+        <br>
+        <small>If you own a Restaurant then joining us is easy</small>
+      </ion-item>
+      <ion-item class="cs-menu-item" (click)="gotoreachout('3')">
+        <ion-icon name="ios-arrow-forward"  color="danger" item-right></ion-icon>
+        Help and Support
+        <br>
+        <small>Know more about Chef Special Support Team</small>
+      </ion-item>
+    </ion-list>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="light">Terms and condition</ion-item-divider>
+    <ion-item class="cs-menu-item" >
+      <ion-icon name="ios-arrow-forward" color="danger" item-right></ion-icon>
+      Privacy
+    </ion-item>
+    <ion-item class="cs-menu-item" >
+      <ion-icon name="ios-arrow-forward" color="danger" item-right></ion-icon>
+      FAQ and Terms
+    </ion-item>
+    <ion-item class="cs-menu-item" >
+      <ion-icon name="ios-arrow-forward" color="danger" item-right></ion-icon>
+      Terms of Service
+    </ion-item>
+  
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider color="light" style="color: #9c9595;">Version 1.0.1</ion-item-divider>
+  </ion-item-group>
+</ion-content>

@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-navbar>
+       <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+       </button>
+       <ion-title>Settings</ion-title>
+    </ion-navbar>
+ </ion-header>
+ <ion-content>
+    <ion-list>
+       <ion-item class="cs-menu-item" (click)="gotonotification()">
+          <ion-icon name="ios-notifications" item-left></ion-icon>
+          <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+          Notifications
+          <br>
+          <small>Manage your notification settings</small>
+       </ion-item>
+       <ion-item class="cs-menu-item" (click)="gotogeneralsettings()">
+          <ion-icon name="ios-settings" item-left></ion-icon>
+          <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+          General Settings 
+          <br>
+          <small>Modify or Delete account </small>
+       </ion-item>
+       <ion-item class="cs-menu-item" (click)="gotosocialsettings()">
+          <ion-icon name="ios-people" item-left></ion-icon>
+          <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+          Connected Accounts
+          <br>
+          <small>Set Social Media accounts permission</small>
+       </ion-item>
+    </ion-list>
+ </ion-content>

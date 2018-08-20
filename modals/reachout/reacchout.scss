@@ -1,0 +1,36 @@
+page-dealsdetails {
+  .card-background-page {
+      ion-card {
+          position: relative;
+          text-align: center;
+          width: calc(100% - 2px);
+          margin: 2px;
+     }
+      ion-grid , .col{
+          padding: 0;
+     }
+ }
+  .card img{
+ }
+  .dealsHead{
+      margin-top: -45px;
+ }
+  .detailsbackground{
+      background: #eee;
+ }
+  .card-title {
+      position: absolute;
+      top: 36%;
+      font-size: 1.5em;
+      width: 100%;
+      font-weight: bold;
+      color: #fff;
+ }
+  .card-subtitle {
+      font-size: 1.0em;
+      position: absolute;
+      top: 56%;
+      width: 100%;
+      color: #fff;
+ }
+}

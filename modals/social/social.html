@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-navbar>
+       <ion-title>Social Settings</ion-title>
+       <ion-buttons end>
+          <button ion-button clear mode="ios" (click)="closeModal()">
+             <ion-icon name="close"></ion-icon>
+          </button>
+       </ion-buttons>
+    </ion-navbar>
+ </ion-header>
+ <ion-content>
+    <div *ngIf="socials; else elseBlock">
+       <ion-card>
+          <ion-item *ngIf="socials.gmail_token">
+             <small>Your social media account Gmail has been linked</small>
+             <h2>{{userName}}
+             </h2>
+             <h3> {{emailId}}</h3>
+             <h3>Social Media : Gmail
+             </h3>
+             <button  ion-button color="danger" (click)="presentConfirm('gmail')">Remove</button>
+          </ion-item>
+       </ion-card>
+       <ion-card *ngIf="socials.facebook_token">
+          <small>Your social media account Facebook has been linked</small>
+          <h2>{{userName}}
+          </h2>
+          <button  ion-button color="danger" (click)="presentConfirm('facebook')">Remove</button>
+          <h3>{{emailId}}</h3>
+          <h3>Social Media : Facebook
+          </h3>
+       </ion-card>
+    </div>
+    <ng-template #elseBlock>
+       <div text-center>
+          <br>
+          <br>
+          <p>No Social Accounts connected</p>
+       </div>
+    </ng-template>
+ </ion-content>

@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-navbar>
+     <ion-title></ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="top-showdiv">
+     <div>
+        <div class="card-title" *ngIf="pageDetails">{{pageDetails}}</div>
+     </div>
+  </div>
+  <ion-list>
+     <div *ngIf="getAllRestaurant && getAllRestaurant.length>0; else elseBlock">
+        <div *ngFor="let item of getAllRestaurant">
+           <ion-item>
+              <ion-thumbnail item-start (click)="navToDetails(item)">
+                 <img-loader  src="{{resImgUrl}}{{item.profile_image}}" [spinner]="true" [fallback]="'assets/imgs/no-image_v2.png'"  [useImg]="true"></img-loader>
+              </ion-thumbnail>
+              <div (click)="navToDetails(item)">
+                 <h2 class="restauranthead">{{item.title}}</h2>
+                 <rating    max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false"
+                 (ngModelChange)="onModelChange($event)" readOnly="true" [(ngModel)]="item.star_ratings"></rating>
+                 <span float-right *ngIf="item.distance">
+                    <small>
+                       <ion-icon name="pin"></ion-icon>
+                       &nbsp;{{item.distance}}km
+                    </small>
+                 </span>
+              </div>
+              <div>
+                 <button ion-button color="danger" (click)="gotodeals(item)">Deals</button>
+                 <button ion-button color="danger" (click)="gotomenu(item)">Today's Spl</button>
+              </div>
+           </ion-item>
+        </div>
+     </div>
+     <ng-template #elseBlock>
+        <ion-list>
+           <br>
+           <br>
+           <h6 text-center>No Restaurants Found</h6>
+        </ion-list>
+     </ng-template>
+  </ion-list>
+</ion-content>
+<ion-footer style="position: fixed">
+  <ion-grid class="cs-footer">
+     <ion-row>
+        <ion-col col-6>
+           <button ion-button block color="light" icon-left mode="ios" (click)="sort()">
+              <ion-icon ios="ios-options" color="danger" md="md-options" mode="ios"></ion-icon>
+              Sort
+           </button>
+        </ion-col>
+        <ion-col col-6>
+           <button ion-button block color="light" icon-left mode="ios" (click)="openFilters()">
+              <ion-icon color="danger" ios="ios-funnel" md="md-funnel" mode="ios"></ion-icon>
+              Filter
+           </button>
+        </ion-col>
+     </ion-row>
+  </ion-grid>
+</ion-footer>

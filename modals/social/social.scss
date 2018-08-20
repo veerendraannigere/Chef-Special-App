@@ -1,0 +1,19 @@
+page-social{
+    .cs-footer{
+        position: absolute;
+        bottom: 0;
+        padding: 0;
+    }
+    
+     .cs-footer , .cs-footer ion-row , .cs-footer ion-col{
+        padding: 0;
+    }
+    
+    .cs-footer button{
+     margin: 0;
+     padding: 0;
+    }
+    .label-md{
+        white-space: initial;
+    }
+}
